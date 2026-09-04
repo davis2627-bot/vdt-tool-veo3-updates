@@ -66,17 +66,17 @@ if (/^import .*from ['"]\.\/cozyVideoAutomation\.js['"];?\s*$/m.test(server)) {
   server = server.replace(m[0], m[0] + '\n' + cozyImport);
 }
 
-// Neu route Cozy chua co thi chen route V35. Neu route cu da co, giu lai de tranh patch trung.
-if (!server.includes("app.post('/api/cozy/create-videos'")) {
+// V35 dung endpoint rieng de bo qua moi route V33/V34 con sot lai.
+if (!server.includes("app.post('/api/cozy/create-videos-v35'")) {
   const anchor = "app.post('/api/create-videos', express.json(), async (req, res) => {";
   const pos = server.indexOf(anchor);
   if (pos < 0) throw new Error('server.js: khong tim thay route /api/create-videos.');
   server = server.slice(0, pos) + read(routeFile).trim() + '\n\n' + server.slice(pos);
 }
 write(serverFile, server);
-console.log('[OK] server.js: import Cozy V35 + route /api/cozy/create-videos.');
+console.log('[OK] server.js: import Cozy V35 + route /api/cozy/create-videos-v35.');
 
-// 3) App: dam bao Cozy co 3 path va goi route rieng.
+// 3) App: dam bao Cozy co 3 path va goi route rieng V35.
 let app = read(appFile);
 
 if (!app.includes('body.referenceImagePaths')) {
@@ -86,19 +86,28 @@ if (!app.includes('body.referenceImagePaths')) {
   app = app.slice(0, pos) + read(appRefsFile) + app.slice(pos);
 }
 
+// Neu V33/V34 da sua endpoint, V35 van chen endpoint rieng ngay truoc fetch /api/create-videos dau tien con lai.
 if (!app.includes('VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT')) {
   const oldFetch = "      const r = await fetch('/api/create-videos', {";
   const pos = app.indexOf(oldFetch);
   if (pos < 0) {
-    // Neu V33/V34 da doi sang route Cozy roi thi khong patch trung.
-    if (!app.includes("'/api/cozy/create-videos'")) {
+    // Neu fetch cu da bi V33/V34 thay, thay truc tiep route Cozy cu thanh route V35.
+    if (app.includes("'/api/cozy/create-videos'")) {
+      app = app.replaceAll("'/api/cozy/create-videos'", "'/api/cozy/create-videos-v35'");
+      app = app.replaceAll('"/api/cozy/create-videos"', '"/api/cozy/create-videos-v35"');
+      app = app.replace('// VDT_COZY_VIDEO_AUTO_RIENG_V34_ENDPOINT', '// VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT');
+      app = app.replace('// VDT_COZY_VIDEO_AUTO_RIENG_V33_ENDPOINT', '// VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT');
+      if (!app.includes('VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT')) {
+        app = '// VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT\n' + app;
+      }
+    } else {
       throw new Error('app.js: khong tim thay fetch create-videos cua canh video.');
     }
   } else {
     const replacement = [
       '      // VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT',
       "      const v35VideoEndpoint = ((typeof getActiveSourceFromVisibleUI === 'function' ? getActiveSourceFromVisibleUI() : (sourceTypeInput?.value || '')) === 'cozy')",
-      "        ? '/api/cozy/create-videos'",
+      "        ? '/api/cozy/create-videos-v35'",
       "        : '/api/create-videos';",
       '      const r = await fetch(v35VideoEndpoint, {'
     ].join('\n');
@@ -112,7 +121,7 @@ if (!app.includes('VDT_COZY_VIDEO_AUTO_RIENG_V35_ENDPOINT')) {
   }
 }
 write(appFile, app);
-console.log('[OK] app.js: Cozy -> /api/cozy/create-videos; module khac giu route cu.');
+console.log('[OK] app.js: Cozy -> /api/cozy/create-videos-v35; module khac giu route cu.');
 
 console.log('');
 console.log('============================================================');
@@ -122,4 +131,5 @@ console.log('- cozyFlowAutomation.js  : KHONG SUA');
 console.log('- cozyVideoAutomation.js : AUTO VIDEO COZY RIENG');
 console.log('- Upload Cozy            : 1 LAN CUNG LUC 3 REF');
 console.log('- Sau 3/3 REF            : MOI DAN PROMPT + GENERATE');
+console.log('- Route V35              : /api/cozy/create-videos-v35');
 console.log('============================================================');
