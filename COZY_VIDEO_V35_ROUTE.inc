@@ -1,5 +1,5 @@
 // VDT_COZY_VIDEO_AUTO_RIENG_V35_ROUTE_BEGIN
-app.post('/api/cozy/create-videos', express.json(), async (req, res) => {
+app.post('/api/cozy/create-videos-v35', express.json(), async (req, res) => {
   const {
     videoPrompts = [], outputDir = '', projectDir = '', referenceImagePaths = [],
     browserType = 'nst', nstApiUrl = 'http://localhost:8848/api/v2',
