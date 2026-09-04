@@ -14,7 +14,7 @@ echo - KHONG SUA cozyFlowAutomation.js
 echo - TAO RIENG cozyVideoAutomation.js
 echo - UPLOAD 1 LAN CUNG LUC 3 REF
 echo - ADD REF1 - REF2 - REF3 - ROI MOI DAN PROMPT VIDEO
-echo - ROUTE RIENG /api/cozy/create-videos
+echo - ROUTE RIENG /api/cozy/create-videos-v35
 echo ============================================================
 
 if not exist "%NODE%" (
@@ -54,10 +54,10 @@ echo.
 echo ============================================================
 echo [OK] V35 DA CAI XONG + NODE CHECK OK.
 echo flowAutomation.js      = GIU NGUYEN
- echo cozyFlowAutomation.js  = GIU NGUYEN AUTO ANH COZY
- echo cozyVideoAutomation.js = AUTO VIDEO COZY RIENG
- echo COZY VIDEO             = UPLOAD 1 LAN CUNG LUC 3 REF
- echo ROUTE                  = /api/cozy/create-videos
+echo cozyFlowAutomation.js  = GIU NGUYEN AUTO ANH COZY
+echo cozyVideoAutomation.js = AUTO VIDEO COZY RIENG
+echo COZY VIDEO             = UPLOAD 1 LAN CUNG LUC 3 REF
+echo ROUTE                  = /api/cozy/create-videos-v35
 echo ============================================================
 echo.
 echo Mo lai VDT TOOL va TEST 1 CANH COZY truoc.
