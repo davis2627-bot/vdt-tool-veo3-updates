@@ -5,6 +5,7 @@ title VDT COZY VIDEO AUTO RIENG V34
 set "ROOT=D:\VDT TOOL VEO 3"
 set "NODE=%ROOT%\runtime\node.exe"
 set "PATCH=%~dp0PATCH_COZY_VIDEO_AUTO_RIENG_V34.mjs"
+set "FIXAPP=%~dp0FIX_V34_APP_PLACEMENT.mjs"
 
 echo ============================================================
 echo VDT COZY VIDEO AUTO RIENG V34
@@ -41,11 +42,24 @@ if not exist "%PATCH%" (
   pause
   exit /b 1
 )
+if not exist "%FIXAPP%" (
+  echo [ERROR] Khong thay FIX_V34_APP_PLACEMENT.mjs
+  pause
+  exit /b 1
+)
 
 "%NODE%" "%PATCH%"
 if errorlevel 1 (
   echo.
-  echo [ERROR] Cai V34 that bai. Tool CHUA khoi dong lai.
+  echo [ERROR] Patch chinh V34 that bai. Tool CHUA khoi dong lai.
+  pause
+  exit /b 1
+)
+
+"%NODE%" "%FIXAPP%"
+if errorlevel 1 (
+  echo.
+  echo [ERROR] Fix vi tri app V34 that bai.
   pause
   exit /b 1
 )
@@ -66,9 +80,9 @@ echo ============================================================
 echo [OK] V34 DA CAI XONG + NODE CHECK OK.
 echo flowAutomation.js      = GIU NGUYEN
 echo cozyFlowAutomation.js  = GIU NGUYEN AUTO ANH COZY
-ECHO cozyVideoAutomation.js = AUTO VIDEO COZY RIENG
+echo cozyVideoAutomation.js = AUTO VIDEO COZY RIENG
 echo Cozy video             = UPLOAD 1 LAN 3 REF
-ECHO ============================================================
+echo ============================================================
 echo Mo lai VDT TOOL va test CHI CANH 1 COZY truoc.
 echo.
 pause
