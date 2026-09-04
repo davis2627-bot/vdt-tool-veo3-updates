@@ -1,0 +1,29 @@
+VDT COZY VIDEO AUTO RIENG V34
+
+V33 loi vi tim ca signature generateVideoFromReference qua regex co dinh.
+V34 chi tim theo ten ham: async function generateVideoFromReference( ... )
+nen khong phu thuoc signature cu.
+
+CAU TRUC:
+- src\flowAutomation.js: GIU NGUYEN
+- src\cozyFlowAutomation.js: GIU NGUYEN auto tao 3 anh Cozy
+- src\cozyVideoAutomation.js: TAO MOI auto video Cozy rieng
+- /api/cozy/create-videos: route rieng
+
+VIDEO COZY:
+1. Mo Flow / vao Video / dung ty le / x1 bang helper hien co.
+2. Bam upload MOT LAN va dua CUNG LUC 3 file REF vao file chooser.
+3. REF1: Add to Prompt.
+4. REF2: chi bam lai dau +, KHONG upload lai, Add to Prompt.
+5. REF3: chi bam lai dau +, KHONG upload lai, Add to Prompt.
+6. Xac minh composer co them thumbnail sau moi lan Add.
+7. Du 3/3 moi dan prompt video.
+8. Generate, cho video xong, download.
+9. Moi sang canh tiep.
+
+CACH CAI:
+- Dong VDT TOOL.
+- Chay CAI_COZY_VIDEO_AUTO_RIENG_V34.cmd.
+- Phai thay [OK] V34 DA CAI XONG + NODE CHECK OK.
+- Mo lai tool.
+- Test CHI CANH 1 COZY truoc.
